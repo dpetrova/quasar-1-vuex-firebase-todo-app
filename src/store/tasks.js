@@ -38,7 +38,7 @@ const state = {
       caption: 'Do not forget to set up alarm',
       dueDate: '2021/07/14',
       dueTime: '06:30',
-      completed: false
+      completed: true
     },
     ID2: {
       name: 'Drink coffee',
@@ -87,8 +87,25 @@ const actions = {
 }
 
 const getters = {
-  tasks: state => {
-    return state.tasks
+  tasksTodo: state => {
+    let tasks = {}
+    for (const key in state.tasks) {
+      const task = state.tasks[key]
+      if (!task.completed) {
+        tasks[key] = task
+      }
+    }
+    return tasks
+  },
+  tasksCompleted: state => {
+    let tasks = {}
+    for (const key in state.tasks) {
+      const task = state.tasks[key]
+      if (task.completed) {
+        tasks[key] = task
+      }
+    }
+    return tasks
   }
 }
 

@@ -2,7 +2,7 @@
   <q-card>
     <q-form @submit.prevent="onSubmit" @reset="onReset" class="q-gutter-md">
       <!-- card header -->
-      <modal-header>Add Task</modal-header>
+      <modal-header>Edit Task</modal-header>
       <!-- card content -->
       <q-card-section class="q-pt-none">
         <modal-task-name :name.sync="taskToSubmit.name" ref="modalTaskName" />
@@ -25,26 +25,22 @@ import ModalButtons from 'src/components/Shared/ModalButtons.vue'
 import { mapActions } from 'vuex'
 
 export default {
+  props: {
+    task: Object,
+    id: String
+  },
   data() {
     return {
-      taskToSubmit: {
-        name: '',
-        caption: '',
-        dueDate: '',
-        dueTime: '',
-        completed: false
-      }
+      taskToSubmit: {}
     }
   },
   methods: {
-    ...mapActions('tasks', ['addTask']),
+    ...mapActions('tasks', ['updateTask']),
     onSubmit() {
-      //no need this
-      // this.$refs.modalTaskName.$refs.name.validate()
-      // if (!this.$refs.modalTaskName.$refs.name.hasError) {
-      //   //submit task
-      // }
-      this.addTask(this.taskToSubmit)
+      this.updateTask({
+        id: this.id,
+        updates: this.taskToSubmit
+      })
       this.$emit('close')
     },
     onReset() {}
@@ -59,6 +55,9 @@ export default {
     'modal-task-due-time': () =>
       import('src/components/Shared/ModalTaskDueTime.vue'),
     'modal-buttons': () => import('src/components/Shared/ModalButtons.vue')
+  },
+  mounted() {
+    this.taskToSubmit = Object.assign({}, this.task)
   }
 }
 </script>

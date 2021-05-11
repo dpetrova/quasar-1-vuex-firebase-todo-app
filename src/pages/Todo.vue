@@ -1,14 +1,23 @@
 <template>
   <q-page class="q-pa-md">
-    <!-- tasks list -->
-    <q-list bordered separator v-if="Object.keys(tasks).length">
-      <task
-        v-for="(task, key) in tasks"
-        :key="key"
-        :task="task"
-        :id="key"
-      ></task>
-    </q-list>
+    <!-- no tasks banner -->
+    <no-tasks v-if="!Object.keys(tasksTodo).length"></no-tasks>
+
+    <!-- todo tasks list -->
+    <tasks-list
+      v-else
+      :tasks="tasksTodo"
+      title="Todo"
+      color="bg-orange-4"
+    ></tasks-list>
+
+    <!-- completed tasks list -->
+    <tasks-list
+      v-if="Object.keys(tasksCompleted).length"
+      :tasks="tasksCompleted"
+      title="Completed"
+      color="bg-green-4"
+    ></tasks-list>
 
     <!-- button to add a new task -->
     <div class="absolute-bottom text-center q-mb-lg">
@@ -42,14 +51,40 @@ export default {
     // tasks() {
     //   return this.$store.getters['tasks/tasks']
     // }
-    ...mapGetters('tasks', ['tasks'])
+    ...mapGetters('tasks', ['tasksTodo', 'tasksCompleted'])
+  },
+  mounted() {
+    //listen to global bus event
+    this.$root.$on('showAddTask', () => {
+      this.showAddTask = true
+    })
   },
   components: {
-    //task: require('src/components/Task.vue').default
-    task: () => import('src/components/Task.vue'),
-    'add-task': () => import('src/components/AddTask.vue')
+    'add-task': () => import('src/components/AddTask.vue'),
+    'tasks-list': () => import('src/components/TasksList.vue'),
+    'no-tasks': () => import('src/components/NoTasks.vue')
   }
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.flip-list-move {
+  transition: transform 0.5s;
+}
+.no-move {
+  transition: transform 0s;
+}
+.ghost {
+  opacity: 0.5;
+  background: #c8ebfb;
+}
+.list-group {
+  min-height: 20px;
+}
+.list-group-item {
+  cursor: move;
+}
+.list-group-item i {
+  cursor: pointer;
+}
+</style>
