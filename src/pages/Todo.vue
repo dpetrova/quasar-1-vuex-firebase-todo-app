@@ -1,8 +1,9 @@
 <template>
   <q-page class="q-pa-md">
     <!-- search bar -->
-    <div class="row q-mb-lg">
+    <div class="row q-col-gutter-xs q-mb-sm">
       <search />
+      <sort />
     </div>
 
     <!-- no tasks banner -->
@@ -82,7 +83,8 @@ export default {
     'add-task': () => import('src/components/AddTask.vue'),
     'tasks-list': () => import('src/components/TasksList.vue'),
     'no-tasks': () => import('src/components/NoTasks.vue'),
-    search: () => import('src/components/Tools/Search.vue')
+    search: () => import('src/components/Tools/Search.vue'),
+    sort: () => import('src/components/Tools/Sort.vue')
   }
 }
 </script>
