@@ -1,11 +1,29 @@
 <template>
   <q-page class="q-pa-md">
+    <!-- search bar -->
+    <div class="row q-mb-lg">
+      <search />
+    </div>
+
     <!-- no tasks banner -->
-    <no-tasks v-if="!Object.keys(tasksTodo).length"></no-tasks>
+    <no-tasks v-if="!Object.keys(tasksTodo).length && !search">
+      No tasks to do.</no-tasks
+    >
+
+    <!-- no search results banner -->
+    <no-tasks
+      v-if="
+        search &&
+          !Object.keys(tasksTodo).length &&
+          !Object.keys(tasksCompleted).length
+      "
+    >
+      No results matched.</no-tasks
+    >
 
     <!-- todo tasks list -->
     <tasks-list
-      v-else
+      v-if="Object.keys(tasksTodo).length"
       :tasks="tasksTodo"
       title="Todo"
       color="bg-orange-4"
@@ -38,7 +56,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapState } from 'vuex'
 
 export default {
   name: 'Todo',
@@ -51,7 +69,8 @@ export default {
     // tasks() {
     //   return this.$store.getters['tasks/tasks']
     // }
-    ...mapGetters('tasks', ['tasksTodo', 'tasksCompleted'])
+    ...mapGetters('tasks', ['tasksTodo', 'tasksCompleted']),
+    ...mapState('tasks', ['search'])
   },
   mounted() {
     //listen to global bus event
@@ -62,7 +81,8 @@ export default {
   components: {
     'add-task': () => import('src/components/AddTask.vue'),
     'tasks-list': () => import('src/components/TasksList.vue'),
-    'no-tasks': () => import('src/components/NoTasks.vue')
+    'no-tasks': () => import('src/components/NoTasks.vue'),
+    search: () => import('src/components/Tools/Search.vue')
   }
 }
 </script>

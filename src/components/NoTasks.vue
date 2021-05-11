@@ -3,7 +3,7 @@
     <template v-slot:avatar>
       <q-icon name="check" color="primary" />
     </template>
-    No tasks to do.
+    <slot></slot>
     <template v-slot:action>
       <q-btn
         flat

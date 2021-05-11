@@ -54,7 +54,8 @@ const state = {
       dueTime: '22:00',
       completed: false
     }
-  }
+  },
+  search: ''
 }
 
 const mutations = {
@@ -66,6 +67,9 @@ const mutations = {
   },
   deleteTask(state, id) {
     Vue.delete(state.tasks, id) //delete a keyed object from the state
+  },
+  setSearch(state, value) {
+    state.search = value
   }
 }
 
@@ -83,24 +87,43 @@ const actions = {
   },
   deleteTask({ commit }, id) {
     commit('deleteTask', id)
+  },
+  setSearch({ commit }, value) {
+    commit('setSearch', value)
   }
 }
 
 const getters = {
-  tasksTodo: state => {
+  tasksFiltered: state => {
+    let filteredTasks = {}
+    let searchQuery = state.search.toLowerCase()
+
+    if (state.search) {
+      for (const key in state.tasks) {
+        const task = state.tasks[key]
+        if (task.name.toLowerCase().includes(searchQuery)) {
+          filteredTasks[key] = task
+        }
+      }
+      return filteredTasks
+    } else {
+      return state.tasks
+    }
+  },
+  tasksTodo: (state, getters) => {
     let tasks = {}
-    for (const key in state.tasks) {
-      const task = state.tasks[key]
+    for (const key in getters.tasksFiltered) {
+      const task = getters.tasksFiltered[key]
       if (!task.completed) {
         tasks[key] = task
       }
     }
     return tasks
   },
-  tasksCompleted: state => {
+  tasksCompleted: (state, getters) => {
     let tasks = {}
-    for (const key in state.tasks) {
-      const task = state.tasks[key]
+    for (const key in getters.tasksFiltered) {
+      const task = getters.tasksFiltered[key]
       if (task.completed) {
         tasks[key] = task
       }
