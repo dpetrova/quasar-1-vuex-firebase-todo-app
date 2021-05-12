@@ -2,6 +2,7 @@
   <q-item
     v-ripple
     clickable
+    v-touch-hold:1300.mouse="showEditTaskModal"
     @click="updateTask({ id: id, updates: { completed: !task.completed } })"
     :class="task.completed ? 'bg-green-1' : 'bg-orange-1'"
   >
@@ -10,9 +11,13 @@
     </q-item-section>
 
     <q-item-section>
-      <q-item-label :class="{ 'text-strike': task.completed }">{{
+      <!-- <q-item-label :class="{ 'text-strike': task.completed }">{{
         task.name
-      }}</q-item-label>
+      }}</q-item-label> -->
+      <q-item-label
+        :class="{ 'text-strike': task.completed }"
+        v-html="$options.filters.searchHighlight(task.name, search)"
+      ></q-item-label>
       <q-item-label caption>{{ task.caption }}</q-item-label>
     </q-item-section>
 
@@ -23,7 +28,7 @@
         </div>
         <div class="column">
           <q-item-label caption class="row justify-end">{{
-            task.dueDate
+            task.dueDate | niceDate
           }}</q-item-label>
           <q-item-label caption class="row justify-end">
             <small>{{ task.dueTime }}</small>
@@ -40,7 +45,7 @@
           dense
           color="primary"
           icon="edit"
-          @click.stop="showEditTask = true"
+          @click.stop="showEditTaskModal"
         />
         <q-btn
           flat
@@ -65,7 +70,9 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapState, mapActions } from 'vuex'
+import { date } from 'quasar'
+const { formatDate } = date
 
 export default {
   name: 'Task',
@@ -77,6 +84,9 @@ export default {
     return {
       showEditTask: false
     }
+  },
+  computed: {
+    ...mapState('tasks', ['search'])
   },
   methods: {
     ...mapActions('tasks', ['updateTask', 'deleteTask']),
@@ -97,10 +107,28 @@ export default {
         .onDismiss(() => {
           // console.log('I am triggered on both OK and Cancel')
         })
+    },
+    showEditTaskModal() {
+      this.showEditTask = true
     }
   },
   components: {
     'edit-task': () => import('src/components/EditTask.vue')
+  },
+  filters: {
+    niceDate(val) {
+      return formatDate(val, 'MMM D')
+    },
+    searchHighlight(val, search) {
+      if (search) {
+        let searchRegex = new RegExp(search, 'ig') //pass case-insensitive and global flags
+        return val.replace(searchRegex, match => {
+          return `<span class="bg-yellow-6">${match}</span>`
+        })
+      }
+
+      return val
+    }
   }
 }
 </script>

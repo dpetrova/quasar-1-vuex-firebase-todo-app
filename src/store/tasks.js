@@ -60,6 +60,90 @@ const state = {
       dueDate: '2021/07/20',
       dueTime: '08:00',
       completed: false
+    },
+    ID5: {
+      name: 'Play with kids',
+      caption: 'Do not waste your time',
+      dueDate: '2021/07/14',
+      dueTime: '06:30',
+      completed: true
+    },
+    ID6: {
+      name: 'Draw a sketch',
+      caption: 'Do not waste your time',
+      dueDate: '2021/07/14',
+      dueTime: '07:30',
+      completed: true
+    },
+    ID7: {
+      name: 'Say something beatiful to someone',
+      caption: 'Do not waste your time',
+      dueDate: '2021/07/30',
+      dueTime: '22:00',
+      completed: false
+    },
+    ID8: {
+      name: 'make a dinner',
+      caption: 'Do not waste your time',
+      dueDate: '2021/07/20',
+      dueTime: '08:00',
+      completed: false
+    },
+    ID9: {
+      name: 'Learn something useful',
+      caption: 'Do not waste your time',
+      dueDate: '2021/07/14',
+      dueTime: '06:30',
+      completed: true
+    },
+    ID10: {
+      name: 'Plant flowers',
+      caption: 'Do not waste your time',
+      dueDate: '2021/07/14',
+      dueTime: '07:30',
+      completed: true
+    },
+    ID11: {
+      name: 'Take care of stary a cat',
+      caption: 'Do not waste your time',
+      dueDate: '2021/07/30',
+      dueTime: '22:00',
+      completed: false
+    },
+    ID12: {
+      name: 'Dream',
+      caption: 'Do not waste your time',
+      dueDate: '2021/07/20',
+      dueTime: '08:00',
+      completed: false
+    },
+    ID13: {
+      name: 'Go to bed early',
+      caption: 'Do not forget to set up alarm',
+      dueDate: '2021/07/14',
+      dueTime: '06:30',
+      completed: true
+    },
+    ID14: {
+      name: 'Sleep well',
+      caption: 'Do not waste your time',
+      dueDate: '2021/07/14',
+      dueTime: '07:30',
+      completed: true
+    },
+    ID15: {
+      name: 'Dream again',
+      caption: 'Do not waste your time',
+      dueDate: '2021/07/30',
+      dueTime: '22:00',
+      completed: false
+    },
+    ID16: {
+      name: 'Get up early',
+      caption: 'Do not waste your time',
+      dueDate: '2021/07/20',
+      dueTime: '08:00',
+      completed: false
     }
   },
   search: '',

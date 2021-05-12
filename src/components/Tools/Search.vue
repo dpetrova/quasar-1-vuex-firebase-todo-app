@@ -4,6 +4,8 @@
     v-model="searchField"
     label="Search"
     class="col-12 col-sm-8"
+    v-select-all
+    @keyup.esc="searchField = ''"
   >
     <template v-slot:append>
       <q-icon
@@ -23,6 +25,7 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
+import { selectAll } from 'src/directives/directive-select-all' //import custom directive
 
 export default {
   computed: {
@@ -38,6 +41,9 @@ export default {
   },
   methods: {
     ...mapActions('tasks', ['setSearch'])
+  },
+  directives: {
+    selectAll
   }
 }
 </script>
