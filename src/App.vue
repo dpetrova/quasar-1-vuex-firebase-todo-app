@@ -5,7 +5,15 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
-  name: 'App'
+  name: 'App',
+  mounted() {
+    this.getSettings()
+  },
+  methods: {
+    ...mapActions('settings', ['getSettings'])
+  }
 }
 </script>
