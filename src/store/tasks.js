@@ -2,35 +2,6 @@ import Vue from 'vue'
 import { uid } from 'quasar' //generate unique identifiers
 
 const state = {
-  /*  
-  tasks: [
-    {
-      id: 1,
-      name: 'Get early',
-      caption: 'Do not forget to set up alarm',
-      dueDate: '2021/07/14',
-      dueTime: '06:30',
-      completed: false
-    },
-    {
-      id: 2,
-      name: 'Drink coffee',
-      caption: 'Strong, withot sugar',
-      dueDate: '2021/07/14',
-      dueTime: '07:30',
-      completed: false
-    },
-    {
-      id: 3,
-      name: 'Write something useful',
-      caption: 'Do not waste your time',
-      dueDate: '2021/07/14',
-      dueTime: '22:00',
-      completed: false
-    }
-  ]
-  */
-
   //firebase not using arrays but only objects
   tasks: {
     ID1: {
@@ -74,76 +45,6 @@ const state = {
       dueDate: '2021/07/14',
       dueTime: '07:30',
       completed: true
-    },
-    ID7: {
-      name: 'Say something beatiful to someone',
-      caption: 'Do not waste your time',
-      dueDate: '2021/07/30',
-      dueTime: '22:00',
-      completed: false
-    },
-    ID8: {
-      name: 'make a dinner',
-      caption: 'Do not waste your time',
-      dueDate: '2021/07/20',
-      dueTime: '08:00',
-      completed: false
-    },
-    ID9: {
-      name: 'Learn something useful',
-      caption: 'Do not waste your time',
-      dueDate: '2021/07/14',
-      dueTime: '06:30',
-      completed: true
-    },
-    ID10: {
-      name: 'Plant flowers',
-      caption: 'Do not waste your time',
-      dueDate: '2021/07/14',
-      dueTime: '07:30',
-      completed: true
-    },
-    ID11: {
-      name: 'Take care of stary a cat',
-      caption: 'Do not waste your time',
-      dueDate: '2021/07/30',
-      dueTime: '22:00',
-      completed: false
-    },
-    ID12: {
-      name: 'Dream',
-      caption: 'Do not waste your time',
-      dueDate: '2021/07/20',
-      dueTime: '08:00',
-      completed: false
-    },
-    ID13: {
-      name: 'Go to bed early',
-      caption: 'Do not forget to set up alarm',
-      dueDate: '2021/07/14',
-      dueTime: '06:30',
-      completed: true
-    },
-    ID14: {
-      name: 'Sleep well',
-      caption: 'Do not waste your time',
-      dueDate: '2021/07/14',
-      dueTime: '07:30',
-      completed: true
-    },
-    ID15: {
-      name: 'Dream again',
-      caption: 'Do not waste your time',
-      dueDate: '2021/07/30',
-      dueTime: '22:00',
-      completed: false
-    },
-    ID16: {
-      name: 'Get up early',
-      caption: 'Do not waste your time',
-      dueDate: '2021/07/20',
-      dueTime: '08:00',
-      completed: false
     }
   },
   search: '',
