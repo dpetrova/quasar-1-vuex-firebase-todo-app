@@ -1,51 +1,52 @@
 import Vue from 'vue'
 import { uid } from 'quasar' //generate unique identifiers
+import { firebaseDb, firebaseAuth } from 'boot/firebase'
 
 const state = {
   //firebase not using arrays but only objects
   tasks: {
-    ID1: {
-      name: 'Get early',
-      caption: 'Do not forget to set up alarm',
-      dueDate: '2021/07/14',
-      dueTime: '06:30',
-      completed: true
-    },
-    ID2: {
-      name: 'Drink coffee',
-      caption: 'Strong, withot sugar',
-      dueDate: '2021/07/14',
-      dueTime: '07:30',
-      completed: false
-    },
-    ID3: {
-      name: 'Do something useful',
-      caption: 'Do not waste your time',
-      dueDate: '2021/07/30',
-      dueTime: '22:00',
-      completed: false
-    },
-    ID4: {
-      name: 'Take a trip',
-      caption: 'Do not waste your time',
-      dueDate: '2021/07/20',
-      dueTime: '08:00',
-      completed: false
-    },
-    ID5: {
-      name: 'Play with kids',
-      caption: 'Do not waste your time',
-      dueDate: '2021/07/14',
-      dueTime: '06:30',
-      completed: true
-    },
-    ID6: {
-      name: 'Draw a sketch',
-      caption: 'Do not waste your time',
-      dueDate: '2021/07/14',
-      dueTime: '07:30',
-      completed: true
-    }
+    // ID1: {
+    //   name: 'Get early',
+    //   caption: 'Do not forget to set up alarm',
+    //   dueDate: '2021/07/14',
+    //   dueTime: '06:30',
+    //   completed: true
+    // },
+    // ID2: {
+    //   name: 'Drink coffee',
+    //   caption: 'Strong, withot sugar',
+    //   dueDate: '2021/07/14',
+    //   dueTime: '07:30',
+    //   completed: false
+    // },
+    // ID3: {
+    //   name: 'Do something useful',
+    //   caption: 'Do not waste your time',
+    //   dueDate: '2021/07/30',
+    //   dueTime: '22:00',
+    //   completed: false
+    // },
+    // ID4: {
+    //   name: 'Take a trip',
+    //   caption: 'Do not waste your time',
+    //   dueDate: '2021/07/20',
+    //   dueTime: '08:00',
+    //   completed: false
+    // },
+    // ID5: {
+    //   name: 'Play with kids',
+    //   caption: 'Do not waste your time',
+    //   dueDate: '2021/07/14',
+    //   dueTime: '06:30',
+    //   completed: true
+    // },
+    // ID6: {
+    //   name: 'Draw a sketch',
+    //   caption: 'Do not waste your time',
+    //   dueDate: '2021/07/14',
+    //   dueTime: '07:30',
+    //   completed: true
+    // }
   },
   search: '',
   sort: 'name'
@@ -70,6 +71,37 @@ const mutations = {
 }
 
 const actions = {
+  fbReadData({ commit }) {
+    // console.log(firebaseAuth.currentUser)
+    let userId = firebaseAuth.currentUser.uid
+    let userTasks = firebaseDb.ref(`tasks/${userId}`)
+
+    //child added hook
+    userTasks.on('child_added', snapshot => {
+      let task = snapshot.val()
+      let payload = {
+        id: snapshot.key,
+        task: task
+      }
+      commit('addTask', payload)
+    })
+
+    //child changed hook
+    userTasks.on('child_changed', snapshot => {
+      let task = snapshot.val()
+      let payload = {
+        id: snapshot.key,
+        updates: task
+      }
+      commit('updateTask', payload)
+    })
+
+    //child removed hook
+    userTasks.on('child_removed', snapshot => {
+      let taskId = snapshot.key
+      commit('deleteTask', taskId)
+    })
+  },
   addTask({ commit }, task) {
     let taskId = uid()
     let payload = {

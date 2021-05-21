@@ -5,6 +5,7 @@ import firebase from 'firebase/app'
 
 // Add the Firebase products that you want to use
 import 'firebase/auth'
+import 'firebase/database'
 
 // Your web app's Firebase configuration
 var firebaseConfig = {
@@ -21,6 +22,7 @@ var firebaseConfig = {
 let firebaseApp = firebase.initializeApp(firebaseConfig)
 
 let firebaseAuth = firebaseApp.auth()
+let firebaseDb = firebaseApp.database()
 
 // "async" is optional;
 // more info on params: https://quasar.dev/quasar-cli/boot-files
@@ -28,4 +30,4 @@ export default async (/* { app, router, Vue ... } */) => {
   // something to do
 }
 
-export { firebaseAuth }
+export { firebaseAuth, firebaseDb }
