@@ -102,19 +102,37 @@ const actions = {
       commit('deleteTask', taskId)
     })
   },
-  addTask({ commit }, task) {
+  fbAddTask({}, payload) {
+    let userId = firebaseAuth.currentUser.uid
+    let taskRef = firebaseDb.ref(`tasks/${userId}/${payload.id}`)
+    taskRef.set(payload.task)
+  },
+  fbUpdateTask({}, payload) {
+    let userId = firebaseAuth.currentUser.uid
+    let taskRef = firebaseDb.ref(`tasks/${userId}/${payload.id}`)
+    taskRef.update(payload.updates)
+  },
+  fbDeleteTask({}, id) {
+    let userId = firebaseAuth.currentUser.uid
+    let taskRef = firebaseDb.ref(`tasks/${userId}/${id}`)
+    taskRef.remove()
+  },
+  addTask({ commit, dispatch }, task) {
     let taskId = uid()
     let payload = {
       id: taskId,
       task: task
     }
-    commit('addTask', payload)
+    //commit('addTask', payload)
+    dispatch('fbAddTask', payload)
   },
-  updateTask({ commit }, payload) {
-    commit('updateTask', payload)
+  updateTask({ commit, dispatch }, payload) {
+    //commit('updateTask', payload)
+    dispatch('fbUpdateTask', payload)
   },
-  deleteTask({ commit }, id) {
-    commit('deleteTask', id)
+  deleteTask({ commit, dispatch }, id) {
+    //commit('deleteTask', id)
+    dispatch('fbDeleteTask', id)
   },
   setSearch({ commit }, value) {
     commit('setSearch', value)
