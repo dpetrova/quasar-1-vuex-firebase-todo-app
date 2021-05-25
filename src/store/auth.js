@@ -52,7 +52,7 @@ const actions = {
       } else {
         // User is logged out
         //commit('tasks/clearTasks', null, { root: true })
-        //commit('tasks/setTasksDownloaded', false, { root: true })
+        commit('tasks/setTasksDownloaded', false, { root: true })
         commit('setLoggedIn', false)
         LocalStorage.set('loggedIn', false)
         //The big difference between push and replace, is that while pushState will create a new entry in the browser's history, replaceState will only replace the current state

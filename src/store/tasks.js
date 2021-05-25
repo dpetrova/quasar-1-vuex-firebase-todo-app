@@ -49,7 +49,8 @@ const state = {
     // }
   },
   search: '',
-  sort: 'name'
+  sort: 'name',
+  tasksDownloaded: false
 }
 
 const mutations = {
@@ -67,6 +68,9 @@ const mutations = {
   },
   setSort(state, value) {
     state.sort = value
+  },
+  setTasksDownloaded(state, value) {
+    state.tasksDownloaded = value
   }
 }
 
@@ -75,6 +79,11 @@ const actions = {
     // console.log(firebaseAuth.currentUser)
     let userId = firebaseAuth.currentUser.uid
     let userTasks = firebaseDb.ref(`tasks/${userId}`)
+
+    //initial check for data hook
+    userTasks.once('value', snapshot => {
+      commit('setTasksDownloaded', true)
+    })
 
     //child added hook
     userTasks.on('child_added', snapshot => {
