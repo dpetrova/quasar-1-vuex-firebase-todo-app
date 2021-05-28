@@ -51,7 +51,7 @@ const actions = {
         dispatch('tasks/fbReadData', null, { root: true }) //dispatch take 3 parameters: 1-> action, 2-> payload, 3->options object
       } else {
         // User is logged out
-        //commit('tasks/clearTasks', null, { root: true })
+        commit('tasks/clearTasks', null, { root: true })
         commit('tasks/setTasksDownloaded', false, { root: true })
         commit('setLoggedIn', false)
         LocalStorage.set('loggedIn', false)

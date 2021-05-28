@@ -63,6 +63,9 @@ const mutations = {
   deleteTask(state, id) {
     Vue.delete(state.tasks, id) //delete a keyed object from the state
   },
+  clearTasks(state) {
+    state.tasks = {}
+  },
   setSearch(state, value) {
     state.search = value
   },
@@ -81,9 +84,15 @@ const actions = {
     let userTasks = firebaseDb.ref(`tasks/${userId}`)
 
     //initial check for data hook
-    userTasks.once('value', snapshot => {
-      commit('setTasksDownloaded', true)
-    })
+    userTasks.once(
+      'value',
+      snapshot => {
+        commit('setTasksDownloaded', true)
+      },
+      err => {
+        console.log(err.message)
+      }
+    )
 
     //child added hook
     userTasks.on('child_added', snapshot => {
