@@ -1,6 +1,7 @@
 import Vue from 'vue'
-import { uid } from 'quasar' //generate unique identifiers
+import { uid, Notify } from 'quasar' //generate unique identifiers
 import { firebaseDb, firebaseAuth } from 'boot/firebase'
+import { showErrorMessage } from 'src/functions/show-error-message'
 
 const state = {
   //firebase not using arrays but only objects
@@ -89,8 +90,9 @@ const actions = {
       snapshot => {
         commit('setTasksDownloaded', true)
       },
-      err => {
-        console.log(err.message)
+      error => {
+        showErrorMessage(error.message)
+        this.$router.replace('/auth')
       }
     )
 
@@ -123,17 +125,39 @@ const actions = {
   fbAddTask({}, payload) {
     let userId = firebaseAuth.currentUser.uid
     let taskRef = firebaseDb.ref(`tasks/${userId}/${payload.id}`)
-    taskRef.set(payload.task)
+    taskRef.set(payload.task, error => {
+      if (error) {
+        showErrorMessage(error.message)
+      } else {
+        Notify.create('Task added')
+      }
+    })
   },
   fbUpdateTask({}, payload) {
     let userId = firebaseAuth.currentUser.uid
     let taskRef = firebaseDb.ref(`tasks/${userId}/${payload.id}`)
-    taskRef.update(payload.updates)
+    taskRef.update(payload.updates, error => {
+      if (error) {
+        showErrorMessage(error.message)
+      } else {
+        let updatesKeys = Object.keys(payload.updates)
+        //not show updates notification when user check task as completed/not completed
+        if (!(updatesKeys.length == 1 && updatesKeys.includes('completed'))) {
+          Notify.create('Task updated')
+        }
+      }
+    })
   },
   fbDeleteTask({}, id) {
     let userId = firebaseAuth.currentUser.uid
     let taskRef = firebaseDb.ref(`tasks/${userId}/${id}`)
-    taskRef.remove()
+    taskRef.remove(error => {
+      if (error) {
+        showErrorMessage(error.message)
+      } else {
+        Notify.create('Task deleted')
+      }
+    })
   },
   addTask({ commit, dispatch }, task) {
     let taskId = uid()
