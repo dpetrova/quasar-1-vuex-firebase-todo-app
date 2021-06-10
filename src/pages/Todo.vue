@@ -105,5 +105,8 @@ export default {
 .q-tasks-scroll-area {
   display: flex;
   flex-grow: 1;
+  .scroll {
+    height: auto !important;
+  }
 }
 </style>

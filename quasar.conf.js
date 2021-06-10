@@ -158,7 +158,9 @@ module.exports = function(/* ctx */) {
       bundler: 'packager', // 'packager' or 'builder'
 
       packager: {
-        // https://github.com/electron-userland/electron-packager/blob/master/docs/api.md#options
+        // https://electron.github.io/electron-packager/master/interfaces/electronpackager.options.html
+
+        platform: 'win32'
         // OS X / Mac App Store
         // appBundleId: '',
         // appCategoryType: '',

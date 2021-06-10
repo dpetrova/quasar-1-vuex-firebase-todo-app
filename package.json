@@ -7,7 +7,10 @@
   "private": true,
   "scripts": {
     "dev": "quasar dev",
+    "dev:electron": "quasar dev -m electron",
     "build": "quasar build",
+    "build:electron": "quasar build -m electron",
+    "icons": "icongenie generate -i src/icon/AppIcon.png --skip-trim",
     "test": "echo \"No test specified\" && exit 0"
   },
   "dependencies": {
@@ -17,7 +20,12 @@
     "quasar": "^1.0.0"
   },
   "devDependencies": {
-    "@quasar/app": "^2.0.0"
+    "@quasar/app": "^2.0.0",
+    "devtron": "^1.4.0",
+    "electron": "^9.4.4",
+    "electron-debug": "^3.2.0",
+    "electron-devtools-installer": "^3.2.0",
+    "electron-packager": "^14.2.1"
   },
   "browserslist": [
     "last 10 Chrome versions",
