@@ -9,6 +9,7 @@
     <q-input
       outlined
       v-model="formData.email"
+      type="email"
       label="Email *"
       hint="Enter your email"
       lazy-rules

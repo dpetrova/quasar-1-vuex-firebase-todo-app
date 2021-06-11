@@ -87,6 +87,15 @@ export default {
     ]),
     visitOurWebsite() {
       openURL('https://www.udemy.com/course/quasarframework')
+      // if (this.$q.platform.is.android && this.$q.platform.is.cordova) {
+      //   cordova.InAppBrowser.open(
+      //     'http://www.google.com',
+      //     '_blank',
+      //     'location=yes'
+      //   )
+      // } else {
+      //   openURL('https://www.udemy.com/course/quasarframework')
+      // }
     },
     emailUs() {
       window.location.href =

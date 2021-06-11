@@ -108,5 +108,10 @@ export default {
   .scroll {
     height: auto !important;
   }
+  //fix tasks scroll area in older iOS devices
+  .mobile & {
+    //& refers to parent css property (here it will match: .mobile.q-tasks-scroll-area)
+    flex-basis: 100px;
+  }
 }
 </style>

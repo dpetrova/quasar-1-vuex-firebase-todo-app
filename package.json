@@ -8,13 +8,18 @@
   "scripts": {
     "dev": "quasar dev",
     "dev:electron": "quasar dev -m electron",
+    "dev:ios": "quasar dev -m cordova -T ios",
+    "dev:android": "quasar dev -m cordova -T android",
     "build": "quasar build",
     "build:electron": "quasar build -m electron",
-    "icons": "icongenie generate -i src/icon/AppIcon.png --skip-trim",
+    "build:ios": "quasar build -m cordova -T ios",
+    "build:android": "quasar build -m cordova -T android",
+    "icons": "icongenie generate -i src/icon/AppIcon.png --skip-trim --theme-color 4078a8",
     "test": "echo \"No test specified\" && exit 0"
   },
   "dependencies": {
     "@quasar/extras": "^1.0.0",
+    "cordova": "^10.0.0",
     "core-js": "^3.6.5",
     "firebase": "^8.6.1",
     "quasar": "^1.0.0"

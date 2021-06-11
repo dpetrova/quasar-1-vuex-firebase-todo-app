@@ -6,15 +6,17 @@
     class="col"
     :rules="[val => !!val || 'Field is required']"
     ref="name"
-    autofocus
     clearable
     v-select-all
+    v-autofocus="{ delay: 700 }"
     @input="$emit('update:name', $event)"
   />
 </template>
 
 <script>
-import { selectAll } from 'src/directives/directive-select-all' //import custom directive
+//import custom directives
+import { selectAll } from 'src/directives/directive-select-all'
+import { autofocus } from 'src/directives/directive-autofocus'
 
 export default {
   props: {
@@ -33,7 +35,8 @@ export default {
     //     })
     //   }
     // }
-    selectAll
+    selectAll,
+    autofocus
   }
 }
 </script>
